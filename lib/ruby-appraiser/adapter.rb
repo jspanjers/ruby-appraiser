@@ -71,5 +71,9 @@ class RubyAppraiser::Adapter
   def add_defect(file, line, desc)
     @appraisal.add_defect RubyAppraiser::Defect.new(file, line, desc)
   end
+
+  def source_files
+    @appraisal.source_files
+  end
 end
 

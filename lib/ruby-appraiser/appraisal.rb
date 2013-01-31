@@ -34,5 +34,11 @@ class RubyAppraiser
     def summary
       "#{defects.count} defects detected."
     end
+
+    def source_files
+      Dir::glob('**/*').select do |filepath|
+        File::file? filepath and RubyAppraiser::rubytype? filepath
+      end
+    end
   end
 end

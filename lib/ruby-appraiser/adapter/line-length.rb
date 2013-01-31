@@ -15,18 +15,4 @@ class RubyAppraiser::Adapter::LineLength < RubyAppraiser::Adapter
       end
     end
   end
-
-  def multiglob(globs)
-    globs.map do |glob|
-      Dir::glob(glob)
-    end.flatten.uniq
-  end
-
-  def source_files
-    multiglob(['**/*.rb',
-               '**/*.gemspec',
-               '**/Capfile',
-               '**/Gemfile',
-               '**/Rakefile'])
-  end
 end
