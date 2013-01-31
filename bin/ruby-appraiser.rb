@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+$LOAD_PATH.unshift(File.dirname(File.realpath(__FILE__)) + '/../lib')
+
+require 'ruby-appraiser'
+require 'benchmark'
+
+cli = RubyAppraiser::CLI.new
+success = nil
+
+time = Benchmark::realtime do
+  success = cli.run
+end
+
+puts "Finished in #{time} seconds" if cli.options[:verbose]
+exit( success ? 0 : 1 )
