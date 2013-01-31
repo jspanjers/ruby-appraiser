@@ -36,7 +36,7 @@ class RubyAppraiser::Adapter
       # load relevant gems
       scanner_pattern = /^ruby-appraiser-([a-zA-Z0-9_\-])+/
       (`gem list --local`).scan scanner_pattern do |gem_name, adapter_type|
-        attempt_require_adapter(gem_name, adapter_type)
+        attempt_require_adapter(adapter_type, gem_name)
       end
 
       # look in the adapter directory
@@ -51,7 +51,6 @@ class RubyAppraiser::Adapter
     def attempt_require_adapter(name, path)
       require path and find(name)
     rescue LoadError
-      puts 'nope.'
       false
     end
 
