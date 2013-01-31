@@ -3,7 +3,7 @@
 class RubyAppraiser
   class Defect
     def initialize(file, line, description)
-      @location = [file, line].freeze
+      @location = [file, line.to_i].freeze
       @description = description.dup.freeze
     end
 
