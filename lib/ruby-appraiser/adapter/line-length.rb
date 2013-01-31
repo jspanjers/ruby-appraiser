@@ -3,8 +3,6 @@
 require 'ruby-appraiser'
 
 class RubyAppraiser::Adapter::LineLength < RubyAppraiser::Adapter
-  adapter_type 'line-length'
-
   def appraise
     source_files.each do |source_file|
       File.open(source_file) do |source|

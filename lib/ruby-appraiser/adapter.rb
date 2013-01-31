@@ -16,7 +16,7 @@ class RubyAppraiser::Adapter
       @adapter_type = type.to_s unless type.nil?
 
       @adapter_type or
-        self.name.split('::').last.downcase
+        self.name.split('::').last.gsub(/[A-Z]+/, '-\0').sub(/^-/, '').downcase
     end
 
     def find(query)
