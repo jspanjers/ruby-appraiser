@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'ruby-appraiser'
 
 class RubyAppraiser::Adapter::LineLength < RubyAppraiser::Adapter
@@ -9,7 +11,8 @@ class RubyAppraiser::Adapter::LineLength < RubyAppraiser::Adapter
         source.lines.each_with_index do |line, number|
           line_length = line.chomp.length
           if line_length > 80
-            add_defect(source_file, number, "Line too long [#{line_length}/80]")
+            add_defect(source_file, number,
+                       "Line too long [#{line_length}/80]")
           end
         end
       end

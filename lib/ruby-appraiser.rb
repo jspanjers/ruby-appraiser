@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "ruby-appraiser/version"
 
 class RubyAppraiser
@@ -6,6 +8,7 @@ class RubyAppraiser
   autoload :Appraisal,  'ruby-appraiser/appraisal'
   autoload :CLI,        'ruby-appraiser/cli'
   autoload :Defect,     'ruby-appraiser/defect'
+  autoload :Git,        'ruby-appraiser/git'
 
   def initialize(options)
     @options = options.dup
@@ -61,7 +64,7 @@ class RubyAppraiser
 
       # true if file has a ruby shebang
       begin
-        return true if File.open(filepath) do |file| 
+        return true if File.open(filepath) do |file|
           file.readline.chomp =~ /#\!.+ruby/
         end
       rescue Errno::ENOENT

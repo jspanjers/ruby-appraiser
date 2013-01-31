@@ -6,7 +6,7 @@ require 'set'
 
 class RubyAppraiser
   class CLI
-    def initialize(args=ARGV.dup)
+    def initialize(args = ARGV.dup)
       @options = {}
 
       OptionParser.new do |opts|
@@ -21,6 +21,10 @@ class RubyAppraiser
         opts.on('--silent', 'Silence output') do |silent|
           @options[:silent] = true
         end
+        opts.on('--mode=MODE', 'Silence output') do |mode|
+          puts "setting mode to '#{mode}'"
+          @options[:mode] = mode
+        end
       end.parse!(args)
 
       @appraiser = RubyAppraiser.new(options)
@@ -32,7 +36,7 @@ class RubyAppraiser
     def options
       @options.dup
     end
-    
+
     def run
       appraisal = @appraiser.appraisal
       puts appraisal unless @options[:silent]

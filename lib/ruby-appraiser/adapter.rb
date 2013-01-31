@@ -14,7 +14,7 @@ class RubyAppraiser::Adapter
 
     def adapter_type(type = nil)
       @adapter_type = type.to_s unless type.nil?
-      
+
       @adapter_type or
         self.name.split('::').last.downcase
     end
@@ -65,7 +65,8 @@ class RubyAppraiser::Adapter
   end
 
   def appraise
-    raise NotImplementedError, "#{self.class.name} does not implement appraise."
+    raise NotImplementedError,
+          "#{self.class.name} does not implement appraise."
   end
 
   def add_defect(file, line, desc)

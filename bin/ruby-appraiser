@@ -14,4 +14,4 @@ time = Benchmark::realtime do
 end
 
 puts "Finished in #{time} seconds" if cli.options[:verbose]
-exit( success ? 0 : 1 )
+exit(success ? 0 : 1)
