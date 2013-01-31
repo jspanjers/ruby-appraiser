@@ -16,7 +16,11 @@ class RubyAppraiser::Adapter
       @adapter_type = type.to_s unless type.nil?
 
       @adapter_type or
-        self.name.split('::').last.gsub(/[A-Z]+/, '-\0').sub(/^-/, '').downcase
+        self.name.split('::').last.
+          sub(/Adapter$/,'').
+          gsub(/[A-Z]+/, '-\0').
+          sub(/^-/, '').
+          downcase
     end
 
     def find(query)
@@ -34,8 +38,8 @@ class RubyAppraiser::Adapter
 
     def all
       # load relevant gems
-      scanner_pattern = /^ruby-appraiser-([a-zA-Z0-9_\-])+/
-      (`gem list --local`).scan scanner_pattern do |gem_name, adapter_type|
+      scanner_pattern = /^(ruby-appraiser-([a-zA-Z0-9_\-]+))/
+      (`gem list --local`).scan(scanner_pattern) do |gem_name, adapter_type|
         attempt_require_adapter(adapter_type, gem_name)
       end
 
