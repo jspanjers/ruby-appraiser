@@ -17,7 +17,6 @@ class RubyAppraiser
       current_path, current_line = nil, nil
       authored_lines = Set.new
 
-
       diff_output.lines do |line|
         case line
         when /^---/ then next

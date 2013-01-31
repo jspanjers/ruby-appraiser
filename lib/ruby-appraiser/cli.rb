@@ -23,8 +23,8 @@ class RubyAppraiser
         opts.on('--silent', 'Silence output') do |silent|
           @options[:silent] = true
         end
-        opts.on('--mode=MODE', 
-                "Set the mode. "+
+        opts.on('--mode=MODE',
+                'Set the mode. ' +
                 '[staged,authored,touched,all]') do |mode|
           @options[:mode] = mode
         end
@@ -35,11 +35,11 @@ class RubyAppraiser
           end
           be = 'bundle exec'
           hook_args = @argv.select { |arg| arg != '--git-hook' }
-          
+
           git_hook = []
-          git_hook << "\#!/usr/bin/env ruby"
+          git_hook << '#!/usr/bin/env ruby'
           git_hook << "IO.popen('#{be} #{command} #{hook_args.join(' ')}')"
-          git_hook << "exit($?)"
+          git_hook << 'exit($?)'
 
           puts git_hook.join($/)
           exit 1

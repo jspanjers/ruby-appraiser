@@ -17,7 +17,7 @@ class RubyAppraiser::Adapter
 
       @adapter_type or
         self.name.split('::').last.
-          sub(/Adapter$/,'').
+          sub(/Adapter$/, '').
           gsub(/[A-Z]+/, '-\0').
           sub(/^-/, '').
           downcase
@@ -79,6 +79,14 @@ class RubyAppraiser::Adapter
 
   def source_files
     @appraisal.source_files
+  end
+
+  def project_root
+    @appraisal.project_root
+  end
+
+  def relative_path(path)
+    @appraisal.relative_path(path)
   end
 end
 

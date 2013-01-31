@@ -37,6 +37,15 @@ class RubyAppraiser
       "#{defects.count} defects detected."
     end
 
+    def project_root
+      @project_root ||= (`git rev-parse --show-toplevel`).chomp
+    end
+
+    def relative_path(path)
+      full_path = File::expand_path(path, project_root)
+      full_path[(project_root.length + 1)..-1]
+    end
+
     protected
 
     def match?(location)
