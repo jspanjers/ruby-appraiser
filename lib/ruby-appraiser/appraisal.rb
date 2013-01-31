@@ -22,11 +22,7 @@ class RubyAppraiser
       raise ArgumentError unless defect.kind_of? Defect
       defects << defect
     end
-
-    def touched_lines
-
-    end
-
+    
     def to_s
       defects.to_a.sort.map(&:to_s).join($/)
     end

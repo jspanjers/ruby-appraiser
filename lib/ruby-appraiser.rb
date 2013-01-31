@@ -21,12 +21,6 @@ class RubyAppraiser
     end
   end
 
-  def attempt_require_adapter(name)
-    require name and adapters.find(name)
-  rescue LoadError
-    false
-  end
-
   def appraisal
     unless @appraisal
       @appraisal = Appraisal.new(options)
