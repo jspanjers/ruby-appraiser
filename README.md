@@ -1,7 +1,16 @@
 RubyAppraiser
 =============
 
-RubyAppraiser is a generic interface for attaching code-quality tools to your development process, limiting the output of those various code-quality tools to only the code that you have recently changed, and allowing multiple code-coverage tools to report at once. The goal is to be able to add a code-quality tool (rubocop, reek) to a project and ensure that no new errors are committed.
+So you have a big project and you want to improve the code quality? Sweet. To
+bad you'll get a million errors when you run [rubocop][], [reek][], or
+[flog][], so it'll annoy you with information overload until you get fed up & 
+turn it off.
+
+Enter: RubyAppraiser, a generic interface for attaching code-quality tools
+that limits their output to the lines you're changing, which allows you to use
+these tools to gradually heal projects. Add a pre-commit hook that rejects
+defective contributions, level up to require entire touched files to be fixed,
+or run several code-quality tools in a single command.
 
 The filters currently provided are:
 
@@ -13,7 +22,9 @@ The filters currently provided are:
 Usage:
 ------
 
-1. Include one or more adapters in your `Gemfile`
+1. Include one or more adapters in your `Gemfile` or as development
+dependencies of your gem. They'll make sure their dependencies (including
+`ruby-appraiser` itself) are taken care of.
 
 ```ruby
 gem 'ruby-appraiser-rubocop'
@@ -26,11 +37,9 @@ gem 'ruby-appraiser-reek'
 bundle exec ruby-appraiser --authored reek rubocop
 ```
 
-The script will exit 0 IFF there are no matching defects from any of your coverage tools. The tools themselves will respect any project-wide settings or config files.
-
-Adapters:
----------
-
+The script will exit 0 IFF there are no matching defects from any of your
+coverage tools. The tools themselves will respect any project-wide settings or
+config files.
 
 Contributing:
 -------------
@@ -46,3 +55,7 @@ class Foo < RubyAppraiser::Adapter
   end
 end
 ```
+
+[rubocop]: https://github.com/bbatslov/rubocop
+[reek]: https://github.com/troessner/reek
+[flog]: https://github.com/seattlerb/flog
