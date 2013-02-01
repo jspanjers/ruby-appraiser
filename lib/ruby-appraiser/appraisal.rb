@@ -24,8 +24,10 @@ class RubyAppraiser
       end
     end
 
-    def add_defect(defect)
-      raise ArgumentError unless defect.kind_of? Defect
+    def add_defect(defect,*args)
+      unless defect.kind_of? Defect
+        defect = Defect.new(defect, *args)
+      end
       defects << defect if match?(defect.location)
     end
 

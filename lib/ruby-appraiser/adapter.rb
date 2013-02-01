@@ -73,20 +73,11 @@ class RubyAppraiser::Adapter
           "#{self.class.name} does not implement appraise."
   end
 
-  def add_defect(file, line, desc)
-    @appraisal.add_defect RubyAppraiser::Defect.new(file, line, desc)
-  end
+  extend Forwardable
 
-  def source_files
-    @appraisal.source_files
-  end
-
-  def project_root
-    @appraisal.project_root
-  end
-
-  def relative_path(path)
-    @appraisal.relative_path(path)
-  end
+  def_delegators :@appraisal, :source_files, 
+                              :project_root, 
+                              :relative_path,
+                              :add_defect
 end
 
