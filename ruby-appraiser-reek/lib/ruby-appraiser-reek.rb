@@ -10,7 +10,7 @@ module RubyAppraiserReek
     def appraise
       reek_command = ['reek',
                       '--yaml',
-                      "#{project_root}/**/*"].join(' ')
+                      project_root].join(' ')
 
       reek_yaml = IO.popen(reek_command) { |io| io.read }
       reek_output = YAML.load(reek_yaml)
