@@ -28,7 +28,9 @@ class RubyAppraiser
     unless @appraisal
       @appraisal = Appraisal.new(options)
 
-      appraisers(appraisal).each(&:appraise)
+      unless @appraisal.relevant_files.empty?
+        appraisers(@appraisal).each(&:appraise)
+      end
     end
 
     @appraisal
