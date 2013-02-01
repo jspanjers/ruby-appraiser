@@ -10,6 +10,7 @@ class RubyAppraiser
       @argv = ARGV.dup
       args = @argv.dup # needed for --git-hook
       @options = {}
+      adapters = Set.new
 
       OptionParser.new do |opts|
         opts.banner = "Usage: #{$0} [inspector...] [options]"
@@ -17,7 +18,7 @@ class RubyAppraiser
           @options[:verbose] = verbose
         end
         opts.on('--list', 'List available adapters') do |list|
-          puts RubyAppraiser::Adapter::all.map(&:adapter_type)
+          puts available_adapters
           exit 1
         end
         opts.on('--silent', 'Silence output') do |silent|
@@ -44,11 +45,16 @@ class RubyAppraiser
           puts git_hook.join($/)
           exit 1
         end
+        opts.on('--all', 'Run all available adapters.') do
+          adapters += available_adapters
+        end
       end.parse!(args)
 
       @appraiser = RubyAppraiser.new(options)
-      while arg = args.pop
-        @appraiser.add_adapter(arg) or raise "Unknown adapter '#{arg}'"
+      adapters += args
+      adapters.each do |adapter|
+        @appraiser.add_adapter(adapter) or
+          raise "Unknown adapter '#{adapter}'"
       end
     end
 
@@ -63,6 +69,10 @@ class RubyAppraiser
       appraisal.success?
     rescue Object
       puts "#{@appraiser.class.name} caught #{$!} at #{$!.backtrace.first}."
+    end
+
+    def available_adapters
+      @available_adapters ||= RubyAppraiser::Adapter::all.map(&:adapter_type)
     end
   end
 end
