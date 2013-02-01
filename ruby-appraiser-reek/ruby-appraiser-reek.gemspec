@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = RubyAppraiserReek::VERSION
   gem.authors       = ["Ryan Biesemeyer"]
   gem.email         = ["ryan@simplymeasured.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Reek adapter for ruby-appraiser}
+  gem.summary       = %q{Run Reek inside RubyAppraiser}
+  gem.homepage      = "https://github.com/simplymeasured"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
