@@ -19,9 +19,9 @@ class RubyAppraiser
     end
 
     def source_files
-      Dir::glob('**/*').select do |filepath|
+      Dir::glob(File::expand_path('**/*', project_root)).select do |filepath|
         File::file? filepath and RubyAppraiser::rubytype? filepath
-      end
+      end.map { |path| relative_path path }
     end
 
     def add_defect(defect,*args)
@@ -51,19 +51,36 @@ class RubyAppraiser
     protected
 
     def match?(location)
+      file,line = *location
+      relevant_lines[file].include? line
+    end
+
+    def relevant_files
+      relevant_lines.keys
+    end
+
+    def relevant_lines
       case mode
-      when 'staged'   then staged_authored_lines.include? location
-      when 'authored' then authored_lines.include? location
-      when 'touched'  then touched_files.include? location[0]
-      when 'all'      then true
+      when 'staged'   then staged_authored_lines
+      when 'authored' then authored_lines
+      when 'touched'  then all_lines_in touched_files
+      when 'all'      then all_lines_in source_files
       else            raise ArgumentError, "Unsupported mode #{mode}."
       end
     end
 
+    # return a hash.
+    # key is a filename
+    # value is a truebot
+    def all_lines_in files
+      infinite_set = (0 .. (1.0 / 0))
+      files.reduce(Hash.new{[]}) do |memo,file|
+        memo.merge!(file => infinite_set)
+      end
+    end
+
     def touched_files
-      @touched_files ||= authored_lines.map do |file, line|
-        file
-      end.uniq
+      @touched_files ||= authored_lines.keys
     end
 
     def authored_lines

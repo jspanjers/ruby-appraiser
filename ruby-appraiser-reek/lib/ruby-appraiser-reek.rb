@@ -8,9 +8,12 @@ module RubyAppraiserReek
   class ReekAdapter < RubyAppraiser::Adapter
 
     def appraise
+      file_args = relevant_files.join(' ')
+      file_args = '**/*.rb' if file_args.length > 250_000
+
       reek_command = ['reek',
                       '--yaml',
-                      project_root].join(' ')
+                      file_args].flatten.join(' ')
 
       reek_yaml = IO.popen(reek_command) { |io| io.read }
       reek_output = YAML.load(reek_yaml)
