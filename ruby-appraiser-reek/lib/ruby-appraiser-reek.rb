@@ -3,12 +3,13 @@
 require 'ruby-appraiser'
 require 'ruby-appraiser-reek/version'
 require 'reek'
+require 'shellwords'
 
 module RubyAppraiserReek
   class ReekAdapter < RubyAppraiser::Adapter
 
     def appraise
-      file_args = relevant_files.join(' ')
+      file_args = Shellwords::join(relevant_files)
       file_args = '**/*.rb' if file_args.length > 250_000
 
       reek_command = ['reek',
