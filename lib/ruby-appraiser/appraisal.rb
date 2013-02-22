@@ -3,19 +3,49 @@
 class RubyAppraiser
   class Appraisal
     def initialize(options = {})
-      @options = options.dup
+      @options = options.dup.freeze
     end
 
     def mode
       @options.fetch(:mode) { 'all' }
     end
 
+    def options
+      @options.dup
+    end
+
+    def run!
+      appraisers.each do |appraiser|
+        appraiser.appraise
+      end unless relevant_files.empty?
+
+      @has_run = true
+    end
+
     def success?
+      run! unless @has_run
+
       defects.empty?
     end
 
     def defects
       @defects ||= Set.new
+    end
+
+    def adapters
+      @adapters ||= Set.new
+    end
+
+    def appraisers
+      adapters.map do |adapter|
+        adapter.new(self, options)
+      end
+    end
+
+    def add_adapter(name)
+      Adapter::get(name).tap do |adapter|
+        adapter and self.adapters << adapter
+      end
     end
 
     def source_files

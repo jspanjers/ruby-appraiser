@@ -18,11 +18,6 @@ class RubyAppraiser
     @options.dup
   end
 
-  def add_adapter(name)
-    Adapter::get(name).tap do |adapter|
-      adapter and self.adapters << adapter
-    end
-  end
 
   def appraisal
     unless @appraisal
@@ -34,16 +29,6 @@ class RubyAppraiser
     end
 
     @appraisal
-  end
-
-  def adapters
-    @adapters ||= Set.new
-  end
-
-  def appraisers(appraisal)
-    adapters.map do |adapter|
-      adapter.new(appraisal, options)
-    end
   end
 
   class << self

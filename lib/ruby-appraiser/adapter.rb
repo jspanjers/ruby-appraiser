@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'set'
+require 'forwardable'
 
 class RubyAppraiser::Adapter
   class << self

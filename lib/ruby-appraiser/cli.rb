@@ -50,10 +50,10 @@ class RubyAppraiser
         end
       end.parse!(args)
 
-      @appraiser = RubyAppraiser.new(options)
+      @appraisal = RubyAppraiser::Appraisal.new(options)
       adapters += args
       adapters.each do |adapter|
-        @appraiser.add_adapter(adapter) or
+        @appraisal.add_adapter(adapter) or
           raise "Unknown adapter '#{adapter}'"
       end
       Dir::chdir((`git rev-parse --show-toplevel`).chomp)
@@ -64,12 +64,12 @@ class RubyAppraiser
     end
 
     def run
-      appraisal = @appraiser.appraisal
-      puts appraisal unless @options[:silent]
-      puts appraisal.summary if @options[:verbose]
-      appraisal.success?
+      @appraisal.run!
+      puts @appraisal unless @options[:silent]
+      puts @appraisal.summary if @options[:verbose]
+      @appraisal.success?
     rescue Object
-      puts "#{@appraiser.class.name} caught #{$!} at #{$!.backtrace.first}."
+      puts "#{@appraisal.class.name} caught #{$!} at #{$!.backtrace.first}." #asdasdasdasd
     end
 
     def available_adapters
