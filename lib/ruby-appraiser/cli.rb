@@ -69,7 +69,7 @@ class RubyAppraiser
       puts @appraisal.summary if @options[:verbose]
       @appraisal.success?
     rescue Object
-      puts "#{@appraisal.class.name} caught #{$!} at #{$!.backtrace.first}." #asdasdasdasd
+      puts "#{@appraisal.class.name} caught #{$!} at #{$!.backtrace.first}."
     end
 
     def available_adapters

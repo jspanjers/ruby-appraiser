@@ -54,7 +54,7 @@ class RubyAppraiser
       end.map { |path| relative_path path }
     end
 
-    def add_defect(defect,*args)
+    def add_defect(defect, *args)
       unless defect.kind_of? Defect
         defect = Defect.new(defect, *args)
       end
@@ -81,7 +81,7 @@ class RubyAppraiser
     protected
 
     def match?(location)
-      file,line = *location
+      file, line = *location
       relevant_lines[file].include? line
     end
 
@@ -102,9 +102,9 @@ class RubyAppraiser
     # return a hash.
     # key is a filename
     # value is a truebot
-    def all_lines_in files
+    def all_lines_in(files)
       infinite_set = (0 .. (1.0 / 0))
-      files.reduce(Hash.new{[]}) do |memo,file|
+      files.reduce(Hash.new { [] }) do |memo, file|
         memo.merge!(file => infinite_set)
       end
     end

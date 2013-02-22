@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require "ruby-appraiser/version"
+require 'ruby-appraiser/version'
 
 class RubyAppraiser
 

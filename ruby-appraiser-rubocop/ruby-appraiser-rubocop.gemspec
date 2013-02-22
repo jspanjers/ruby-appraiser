@@ -4,18 +4,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby-appraiser-rubocop/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "ruby-appraiser-rubocop"
+  gem.name          = 'ruby-appraiser-rubocop'
   gem.version       = RubyAppraiserRubocop::VERSION
-  gem.authors       = ["Ryan Biesemeyer"]
-  gem.email         = ["ryan@simplymeasured.com"]
+  gem.authors       = ['Ryan Biesemeyer']
+  gem.email         = ['ryan@simplymeasured.com']
   gem.description   = %q{Rubocop adapter for ruby-appraiser}
   gem.summary       = %q{Run Rubocop inside RubyAppraiser}
-  gem.homepage      = "https://github.com/simplymeasured"
+  gem.homepage      = 'https://github.com/simplymeasured'
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib']
 
   gem.add_runtime_dependency 'rubocop'
   gem.add_runtime_dependency 'ruby-appraiser'

@@ -60,7 +60,7 @@ class RubyAppraiser::Adapter
     end
 
     def find!(query)
-      find(query) or raise ArgumentError, "Adapter '#{query}' not found." 
+      find(query) or raise ArgumentError, "Adapter '#{query}' not found."
     end
   end
 
@@ -76,8 +76,8 @@ class RubyAppraiser::Adapter
 
   extend Forwardable
 
-  def_delegators :@appraisal, :source_files, 
-                              :project_root, 
+  def_delegators :@appraisal, :source_files,
+                              :project_root,
                               :relative_path,
                               :add_defect,
                               :authored_lines,
