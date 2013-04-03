@@ -33,7 +33,7 @@ class RubyAppraiser
 
       authored_lines.default_proc = Proc.new { [] }
       authored_lines.reject do |filepath, lines|
-        not File::file? filepath and
+        not File::file? filepath or
         not RubyAppraiser::rubytype? filepath
       end
     end
