@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'A Common interface/executor for code quality tools'
   gem.homepage      = 'https://github.com/simplymeasured'
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files | grep -v '^ruby-appraiser-'`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
