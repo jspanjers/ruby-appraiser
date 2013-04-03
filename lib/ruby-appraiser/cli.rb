@@ -13,7 +13,7 @@ class RubyAppraiser
       adapters = Set.new
 
       OptionParser.new do |opts|
-        opts.banner = "Usage: #{$0} [inspector...] [options]"
+        opts.banner = "Usage: #{File::basename($0)} [inspector...] [options]"
         opts.on('-v', '--[no-]verbose', 'Run verbosely') do |verbose|
           @options[:verbose] = verbose
         end
