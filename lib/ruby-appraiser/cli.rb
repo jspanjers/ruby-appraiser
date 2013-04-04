@@ -44,7 +44,7 @@ class RubyAppraiser
             bundle exec #{command} #{hook_args.join(' ')}
 
             result_code=$?
-            if [ $result_code > "0" ]; then
+            if [ $result_code -gt "0" ]; then
               echo -en "\\033[0;31m" # RED
               echo "[✘] Ruby Appraiser found newly-created defects and "
               echo "    has blocked your commit."
