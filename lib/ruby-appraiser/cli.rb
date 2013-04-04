@@ -37,12 +37,30 @@ class RubyAppraiser
           be = 'bundle exec'
           hook_args = @argv.select { |arg| arg != '--git-hook' }
 
-          git_hook = []
-          git_hook << '#!/usr/bin/env ruby'
-          git_hook << "IO.popen('#{be} #{command} #{hook_args.join(' ')}')"
-          git_hook << 'exit($?)'
+          indented_git_hook = <<-EOGITHOOK
+            #!/bin/bash
+            echo -e "\\033[0;36mRuby Appraiser: running\\033[0m"
 
-          puts git_hook.join($/)
+            bundle exec #{command} #{hook_args.join(' ')}
+
+            result_code=$?
+            if [ $result_code > "0" ]; then
+              echo -en "\\033[0;31m" # RED
+              echo "[✘] Ruby Appraiser found newly-created defects and "
+              echo "    has blocked your commit."
+              echo "    Fix the defects and commit again."
+              echo "    To bypass, commit again with --no-verify."
+              echo -en "\\033[0m" # RESET
+              exit $result_code
+            else
+              echo -en "\\033[0;32m" # GREEN
+              echo "[✔] Ruby Appraiser ok"
+              echo -en "\\033[0m" #RESET
+            fi
+          EOGITHOOK
+
+          indent = indented_git_hook.scan(/^\s*/).map(&:length).min
+          puts indented_git_hook.lines.map {|l| l[indent..-1]}.join
           exit 1
         end
         opts.on('--all', 'Run all available adapters.') do
