@@ -1,7 +1,7 @@
 RubyAppraiser
 =============
 
-So you have a big project and you want to improve the code quality? Sweet. To
+So you have a big project and you want to improve the code quality? Sweet. Too
 bad you'll get a million errors when you run [rubocop][], [reek][], or
 [flog][], so it'll annoy you with information overload until you get fed up & 
 turn it off.
