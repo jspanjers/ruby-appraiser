@@ -3,6 +3,9 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby-appraiser-rubocop/version'
 
+require 'fileutils'
+FileUtils::cd(File::dirname(__FILE__))
+
 Gem::Specification.new do |gem|
   gem.name          = 'ruby-appraiser-rubocop'
   gem.version       = RubyAppraiserRubocop::VERSION
