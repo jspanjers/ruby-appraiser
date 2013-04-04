@@ -14,6 +14,7 @@ module RubyAppraiserRubocop
 
       rubocop_command = ['rubocop --emacs',
                          file_args].flatten.join(' ')
+      puts rubocop_command if @options[:verbose]
 
       rubocop_output = IO.popen(rubocop_command) { |io| io.read }
 

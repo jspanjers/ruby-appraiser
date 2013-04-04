@@ -15,6 +15,7 @@ module RubyAppraiserReek
       reek_command = ['reek',
                       '--yaml',
                       file_args].flatten.join(' ')
+      puts reek_command if @options[:verbose]
 
       reek_yaml = IO.popen(reek_command) { |io| io.read }
       reek_output = YAML.load(reek_yaml)
