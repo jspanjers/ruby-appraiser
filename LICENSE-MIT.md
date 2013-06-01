@@ -1,4 +1,4 @@
-Copyright (c) 2013 Ryan Biesemeyer
+Copyright (c) 2013 Simply Measured
 
 MIT License
 

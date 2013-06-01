@@ -67,6 +67,11 @@ class Foo < RubyAppraiser::Adapter
 end
 ```
 
+License
+-------
+See [LICENSE][]
+
+[LICENSE]: LICENSE.md
 [rubocop]: https://github.com/bbatslov/rubocop
 [reek]: https://github.com/troessner/reek
 [flog]: https://github.com/seattlerb/flog
