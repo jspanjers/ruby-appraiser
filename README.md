@@ -1,7 +1,7 @@
 RubyAppraiser
 =============
 
-So you have a big project and you want to improve the code quality? Sweet. To
+So you have a big project and you want to improve the code quality? Sweet. Too
 bad you'll get a million errors when you run [rubocop][], [reek][], or
 [flog][], so it'll annoy you with information overload until you get fed up & 
 turn it off.
@@ -34,12 +34,23 @@ gem 'ruby-appraiser-reek'
 2. Execute the appraiser:
 
 ```sh
-bundle exec ruby-appraiser --authored reek rubocop
+bundle exec ruby-appraiser --mode=authored reek rubocop
 ```
 
 The script will exit 0 IFF there are no matching defects from any of your
 coverage tools. The tools themselves will respect any project-wide settings or
 config files.
+
+```
+$ bundle exec ruby-appraiser --help
+Usage: ruby-appraiser [inspector...] [options]
+    -v, --[no-]verbose        Run verbosely
+        --list                List available adapters
+        --silent              Silence output
+        --mode=MODE           Set the mode. [staged,authored,touched,all]
+        --git-hook            Output a git hook with current comand to STDOUT
+        --all                 Run all available adapters.
+```
 
 Contributing:
 -------------
@@ -56,6 +67,11 @@ class Foo < RubyAppraiser::Adapter
 end
 ```
 
+License
+-------
+See [LICENSE][]
+
+[LICENSE]: LICENSE.md
 [rubocop]: https://github.com/bbatslov/rubocop
 [reek]: https://github.com/troessner/reek
 [flog]: https://github.com/seattlerb/flog

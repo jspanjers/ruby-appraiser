@@ -29,7 +29,8 @@ class RubyAppraiser
                 '[staged,authored,touched,all]') do |mode|
           @options[:mode] = mode
         end
-        opts.on('--git-hook') do
+        opts.on('--git-hook', 
+                'Output a git hook with current comand to STDOUT') do
           command = $0
           if (`which #{File::basename(command)}`).chomp == command
             command = File::basename(command)
