@@ -1,8 +1,7 @@
-require 'ruby-appraiser'
-
 namespace :appraise do
   def appraise_task(mode = 'all')
     task mode do
+      require 'ruby-appraiser'
       @appraisal = RubyAppraiser::Appraisal.new(mode: mode.to_s)
       RubyAppraiser::Adapter::all.each do |adapter|
         @appraisal.add_adapter adapter.adapter_type
