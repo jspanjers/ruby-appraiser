@@ -8,6 +8,7 @@ namespace :appraise do
       end
       @appraisal.run!
       puts @appraisal
+      @appraisal.success? || fail('appraisal found defects')
     end
   end
 
