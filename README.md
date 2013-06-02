@@ -67,6 +67,11 @@ class Foo < RubyAppraiser::Adapter
 end
 ```
 
+This project uses the [git-flow][] branching model, which means every commit
+on `master` is by definition a release. Security-related fixes should be
+submitted as hotfix branches off of `master`; all other features and fixes
+**must** be based on `develop`.
+
 License
 -------
 See [LICENSE][]
@@ -75,3 +80,5 @@ See [LICENSE][]
 [rubocop]: https://github.com/bbatslov/rubocop
 [reek]: https://github.com/troessner/reek
 [flog]: https://github.com/seattlerb/flog
+
+[git-flow]: http://nvie.com/git-model
