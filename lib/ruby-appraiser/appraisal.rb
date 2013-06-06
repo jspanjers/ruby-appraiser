@@ -115,7 +115,8 @@ class RubyAppraiser
         raise ArgumentError, 'mode=last only works on *clean* checkout. ' +
                              'git-stash your changes and try again.'
       end
-      @last_commit_lines ||= RubyAppraiser::Git::authored_lines(range:'HEAD~1 HEAD')
+      @last_commit_lines ||=
+        RubyAppraiser::Git::authored_lines(range:'HEAD~1..HEAD')
     end
 
     def touched_files
