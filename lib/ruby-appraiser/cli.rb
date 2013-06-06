@@ -26,7 +26,7 @@ class RubyAppraiser
         end
         opts.on('--mode=MODE',
                 'Set the mode. ' +
-                '[staged,authored,touched,all]') do |mode|
+                '[staged,authored,touched,last,all]') do |mode|
           @options[:mode] = mode
         end
         opts.on('--git-hook', 

@@ -94,6 +94,7 @@ class RubyAppraiser
       when 'staged'   then staged_authored_lines
       when 'authored' then authored_lines
       when 'touched'  then all_lines_in touched_files
+      when 'last'     then last_commit_lines
       when 'all'      then all_lines_in source_files
       else            raise ArgumentError, "Unsupported mode #{mode}."
       end
@@ -107,6 +108,14 @@ class RubyAppraiser
       files.reduce(Hash.new { [] }) do |memo, file|
         memo.merge!(file => infinite_set)
       end
+    end
+
+    def last_commit_lines
+      unless authored_lines.empty?
+        raise ArgumentError, 'mode=last only works on *clean* checkout. ' +
+                             'git-stash your changes and try again.'
+      end
+      @last_commit_lines ||= RubyAppraiser::Git::authored_lines(range:'HEAD~1 HEAD')
     end
 
     def touched_files
