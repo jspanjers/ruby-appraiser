@@ -8,6 +8,9 @@ class RubyAppraiser
   class CLI
     def initialize(args = ARGV)
       @argv = ARGV.dup
+    end
+
+    def configure
       args = @argv.dup # needed for --git-hook
       @options = {}
       adapters = Set.new
@@ -21,12 +24,13 @@ class RubyAppraiser
           puts available_adapters
           exit 1
         end
+        opts.on('-t', '--trace', 'Enable backtrace')
         opts.on('--silent', 'Silence output') do |silent|
           @options[:silent] = true
         end
         opts.on('--mode=MODE',
                 'Set the mode. ' +
-                '[staged,authored,touched,all]') do |mode|
+                '[staged,authored,touched,last,all]') do |mode|
           @options[:mode] = mode
         end
         opts.on('--git-hook', 
@@ -83,12 +87,18 @@ class RubyAppraiser
     end
 
     def run
+      self.configure
       @appraisal.run!
       puts @appraisal unless @options[:silent]
       puts @appraisal.summary if @options[:verbose]
       @appraisal.success?
-    rescue Object
-      puts "#{@appraisal.class.name} caught #{$!} at #{$!.backtrace.first}."
+    rescue Exception
+      $stderr.puts $!.message
+      unless (@argv & ['--trace','-t']).empty?
+        $stderr.puts $!.inspect
+        $stderr.puts $!.backtrace
+      end
+      nil
     end
 
     def available_adapters

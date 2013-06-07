@@ -5,14 +5,24 @@ class RubyAppraiser
     extend self
 
     def authored_lines(options = {})
-      diff_command = ['git diff']
+      diff_command = ['git', 'diff']
       if options[:range]
         diff_command << options[:range]
       else
         diff_command << (options[:staged] ? '--cached' : 'HEAD')
       end
 
-      diff_output = IO.popen(diff_command.join(' ')) { |io| io.read }
+      diff_io = IO.popen(diff_command << {err: [:child, :out]})
+      diff_output = diff_io.read
+
+      case diff_output
+      when /^fatal: Not a git/i
+        then raise 'ruby-appraiser only works in git repos.'
+      when /^fatal: ambiguous argument 'HEAD'/i
+        then raise 'this ruby-appraiser mode only works with previous ' +
+                   'commits, and your repository doesn\t appear to have ' +
+                   'any. Make some commits first, or try a different mode.'
+      end
 
       current_path, current_line = nil, nil
       authored_lines = Hash.new { |hash, key| hash[key] = [] }
