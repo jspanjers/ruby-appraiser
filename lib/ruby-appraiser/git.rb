@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'open3'
 
 class RubyAppraiser
   module Git
@@ -12,10 +13,10 @@ class RubyAppraiser
         diff_command << (options[:staged] ? '--cached' : 'HEAD')
       end
 
-      diff_io = IO.popen(diff_command << {err: [:child, :out]})
-      diff_output = diff_io.read
+      stdin, stdout, stderr = Open3.popen3(*diff_command)
+      stdin.close
 
-      case diff_output
+      case stderr.read
       when /^fatal: Not a git/i
         then raise 'ruby-appraiser only works in git repos.'
       when /^fatal: ambiguous argument 'HEAD'/i
@@ -27,7 +28,7 @@ class RubyAppraiser
       current_path, current_line = nil, nil
       authored_lines = Hash.new { |hash, key| hash[key] = [] }
 
-      diff_output.lines do |line|
+      stdout.each_line do |line|
         case line
         when /^---/ then next
         when /^\+\+\+ (?:b\/)?(.*)/
