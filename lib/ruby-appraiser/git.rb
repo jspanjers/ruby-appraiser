@@ -6,29 +6,19 @@ class RubyAppraiser
     extend self
 
     def authored_lines(options = {})
-      diff_command = ['git', 'diff']
+      diff_command = ['diff']
       if options[:range]
         diff_command << options[:range]
       else
         diff_command << (options[:staged] ? '--cached' : 'HEAD')
       end
 
-      stdin, stdout, stderr = Open3.popen3(*diff_command)
-      stdin.close
-
-      case stderr.read
-      when /^fatal: Not a git/i
-        then raise 'ruby-appraiser only works in git repos.'
-      when /^fatal: ambiguous argument 'HEAD'/i
-        then raise 'this ruby-appraiser mode only works with previous ' +
-                   'commits, and your repository doesn\t appear to have ' +
-                   'any. Make some commits first, or try a different mode.'
-      end
+      diff_out = run(*diff_command)
 
       current_path, current_line = nil, nil
       authored_lines = Hash.new { |hash, key| hash[key] = [] }
 
-      stdout.each_line do |line|
+      diff_out.each_line do |line|
         case line
         when /^---/ then next
         when /^\+\+\+ (?:b\/)?(.*)/
@@ -47,6 +37,23 @@ class RubyAppraiser
         not File::file? filepath or
         not RubyAppraiser::rubytype? filepath
       end
+    end
+
+    def run(*git_command)
+      stdin, stdout, stderr = Open3.popen3('git', *git_command)
+      stdin.close
+
+      case stderr.read
+      when /^fatal: Not a git/i
+        then raise 'ruby-appraiser only works in git repos.'
+      when /^fatal: ambiguous argument 'HEAD'/i
+        then raise 'this ruby-appraiser mode only works with previous ' +
+                   'commits, and your repository doesn\'t appear to have ' +
+                   'any. Make some commits first, or try a different mode.'
+      end
+
+      return yield(stdout) if block_given?
+      stdout
     end
   end
 end

@@ -79,7 +79,8 @@ class RubyAppraiser
         @appraisal.add_adapter(adapter) or
           raise "Unknown adapter '#{adapter}'"
       end
-      Dir::chdir((`git rev-parse --show-toplevel`).chomp)
+      git_base = Git.run('rev-parse', '--show-toplevel', &:read).chomp
+      Dir.chdir(git_base)
     end
 
     def options
