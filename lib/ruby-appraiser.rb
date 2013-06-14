@@ -52,9 +52,9 @@ class RubyAppraiser
       # true if file has a ruby shebang
       begin
         return true if File.open(filepath) do |file|
-          file.read(20).chomp =~ /\A#\!.+ruby/
+          file.readline(20).chomp =~ /\A#\!.+ruby/
         end
-      rescue Errno::ENOENT
+      rescue EOFError      # file was empty
       rescue ArgumentError # invalid byte sequence
       end
 
