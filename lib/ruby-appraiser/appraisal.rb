@@ -54,9 +54,12 @@ class RubyAppraiser
       end.map { |path| relative_path path }
     end
 
-    def add_defect(defect, *args)
-      unless defect.kind_of? Defect
-        defect = Defect.new(defect, *args)
+    def add_defect(*args)
+      if args.first.kind_of?(Defect)
+        defect = args.shift
+      else
+        file, line, desc = *args
+        defect = Defect.new(relative_path(file), line, desc)
       end
       defects << defect if match?(defect.location)
     end
@@ -70,7 +73,7 @@ class RubyAppraiser
     end
 
     def project_root
-      @project_root ||= (`git rev-parse --show-toplevel`).chomp
+      @project_root ||= RubyAppraiser::Git.project_root
     end
 
     def relative_path(path)
