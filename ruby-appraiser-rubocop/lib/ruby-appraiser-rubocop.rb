@@ -12,7 +12,7 @@ module RubyAppraiserRubocop
       file_args = Shellwords::join(relevant_files)
       file_args = '**/*.rb' if file_args.length > 250_000
 
-      rubocop_command = ['rubocop --emacs',
+      rubocop_command = ['rubocop --format emacs',
                          file_args].flatten.join(' ')
       puts rubocop_command if @options[:verbose]
 
