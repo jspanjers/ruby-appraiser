@@ -55,7 +55,7 @@ Usage: ruby-appraiser [inspector...] [options]
 Contributing:
 -------------
 
-1. Write an adapter! Take a look at the existing adapters for help.
+1. Write an adapter! Take a look at the existing adapter gems for help.
 
 ```ruby
 class Foo < RubyAppraiser::Adapter

@@ -44,11 +44,6 @@ class RubyAppraiser::Adapter
         attempt_require_adapter(adapter_type, gem_name)
       end
 
-      # look in the adapter directory
-      Dir::glob(File::expand_path('../adapter/*.rb', __FILE__)) do |filepath|
-        require filepath
-      end
-
       # return the registry
       registry
     end
