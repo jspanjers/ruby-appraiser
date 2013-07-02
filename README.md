@@ -45,6 +45,7 @@ config files.
 $ bundle exec ruby-appraiser --help
 Usage: ruby-appraiser [inspector...] [options]
     -v, --[no-]verbose        Run verbosely
+    -t, --trace               Include backtrace on failure
         --list                List available adapters
         --silent              Silence output
         --mode=MODE           Set the mode. [staged,authored,touched,all]
