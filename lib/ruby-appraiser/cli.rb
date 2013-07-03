@@ -24,7 +24,7 @@ class RubyAppraiser
           puts available_adapters
           exit 1
         end
-        opts.on('-t', '--trace', 'Enable backtrace')
+        opts.on('-t', '--trace', 'Enable backtrace on failure')
         opts.on('--silent', 'Silence output') do |silent|
           @options[:silent] = true
         end

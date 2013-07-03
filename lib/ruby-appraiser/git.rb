@@ -5,6 +5,10 @@ class RubyAppraiser
   module Git
     extend self
 
+    def project_root
+      run('rev-parse', '--show-toplevel', &:read).chomp
+    end
+
     def authored_lines(options = {})
       diff_command = ['diff']
       if options[:range]

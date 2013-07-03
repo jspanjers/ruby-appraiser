@@ -12,17 +12,19 @@ module RubyAppraiserRubocop
       file_args = Shellwords::join(relevant_files)
       file_args = '**/*.rb' if file_args.length > 250_000
 
-      rubocop_command = ['rubocop --emacs',
+      rubocop_command = ['rubocop --format emacs',
                          file_args].flatten.join(' ')
       puts rubocop_command if @options[:verbose]
 
       rubocop_output = IO.popen(rubocop_command) { |io| io.read }
 
-      rubocop_output.lines.each do |rubocop_outut_line|
-        next unless rubocop_outut_line.match(/^([^:]+):([0-9]+)(.*)/)
+      file_line_desc_pattern = /^([^:]+):([0-9]+)(\:[0-9]+\:?)?(.*)/
+      rubocop_output.lines.each do |rubocop_output_line|
+        next unless rubocop_output_line.match(file_line_desc_pattern)
         file = Regexp::last_match(1)
         line = Regexp::last_match(2).to_i
-        desc = Regexp::last_match(3).strip
+        # column = Regexp::last_match(3).to_i # currently throw-away :(
+        desc = Regexp::last_match(4).strip
         add_defect(file, line, desc)
       end
     end
