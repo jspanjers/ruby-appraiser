@@ -18,6 +18,7 @@ The filters currently provided are:
  - authored - all uncommitted defects
  - staged - all staged defects
  - touched - all defects in files that have been touched
+ - last - all defects in last commit (working directory must be clean)
 
 Usage:
 ------
@@ -48,7 +49,7 @@ Usage: ruby-appraiser [inspector...] [options]
     -t, --trace               Include backtrace on failure
         --list                List available adapters
         --silent              Silence output
-        --mode=MODE           Set the mode. [staged,authored,touched,all]
+        --mode=MODE           Set the mode. [staged,authored,touched,last,all]
         --git-hook            Output a git hook with current comand to STDOUT
         --all                 Run all available adapters.
 ```
